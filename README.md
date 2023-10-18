@@ -1,9 +1,9 @@
 # Fresh Player Models
-Minecraft resourcepack that animates player in *kinda* Fresh's style.
 
-Thanks to Fresh for allowing me use his resourcepack as a base!
+Minecraft resourcepack that animates player using [EMF](https://modrinth.com/mod/entity-model-features).
 
-# TODO
-- [X] Sword
-- [X] Crossbow
-- [ ] All other items
+Thanks to FreshLX to allowing me to use his resourcepack as a base!
+
+## TODO
+
+- [ ] Full Remake
