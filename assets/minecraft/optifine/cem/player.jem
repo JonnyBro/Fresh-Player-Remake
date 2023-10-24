@@ -55,7 +55,7 @@
 					"head.tz": "-1 * (limb_speed / 10) * move_forward - sin(var.r + var.b)/6 - cos(var.ls * 2)/2 * clamp(limb_speed, 0, 1) - if(is_sneaking && is_on_ground, 1.5, 0)"
 				},
 				{
-					"body.ry": "torad(-7.5 * -sin(var.ls) / 4 * limb_speed * clamp(-1 + limb_speed * 2, 0, 1)) + torad(head_yaw)/3",
+					"body.ry": "torad(-7.5 * -sin(var.ls) / 4 * limb_speed * clamp(-1 + limb_speed * 2, 0, 1)) + torad(head_yaw)/3 + sin(-pi*swing_progress)/6",
 					"body.rz": "head.rz",
 					"body.tx": "head.tx",
 					"body.ty": "head.ty - if(is_sneaking && is_on_ground, 1, 0)",
@@ -63,17 +63,17 @@
 				},
 				{
 					"right_arm.rx": "torad(head_pitch)/10 + if(is_riding, torad(-45), -sin(var.ls) * limb_speed/if(limb_speed > 0.9, 1, 2) * if(move_forward > 0, 1, -1) + torad(head_yaw)/10) + (-sin(-pi / 3 + var.r + var.b + sin(var.r + var.b)) / 6 ) * var.nov2 - sin(pi*swing_progress)",
-					"left_arm.rx": "torad(head_pitch)/10 + if(is_riding, torad(-45),  sin(var.ls) * limb_speed/if(limb_speed > 0.9, 1, 2) * if(move_forward > 0, 1, -1) - torad(head_yaw)/10) + (-sin(-pi / 3 + var.r + var.b + sin(var.r + var.b)) / 6 ) * var.nov2 + sin(pi*swing_progress)/6",
-					"right_arm.ry": "if(!is_riding, -torad(5),  cos(var.r + var.b)/30 + torad(-10)                            )",
-					"left_arm.ry": "if(!is_riding,  torad(5), -cos(var.r + var.b)/30 + torad( 10) + sin(pi*swing_progress)/10)",
-					"right_arm.rz": "sin(pi*2*swing_progress)/2 - torad(head_pitch)/20 + torad( 8 +   2 * var.pose) + torad(var.jump * 10) + sin(-pi+torad(90)*swing_progress*2)",
-					"left_arm.rz": "                             torad(head_pitch)/20 + torad(-8 + 0.5 * var.pose) - torad(var.jump * 10)",
+					"left_arm.rx": " torad(head_pitch)/10 + if(is_riding, torad(-45),  sin(var.ls) * limb_speed/if(limb_speed > 0.9, 1, 2) * if(move_forward > 0, 1, -1) - torad(head_yaw)/10) + (-sin(-pi / 3 + var.r + var.b + sin(var.r + var.b)) / 6 ) * var.nov2 + sin(pi*swing_progress)/6",
+					"right_arm.ry": "if(is_riding, -torad(5), torad(head_yaw)/4 - cos(var.r + var.b)/30 + torad(-10)                            )",
+					"left_arm.ry": " if(is_riding,  torad(5), torad(head_yaw)/4 - cos(var.r + var.b)/30 + torad( 10) + sin(pi*swing_progress)/10)",
+					"right_arm.rz": "sin(pi*2*swing_progress)/2 - torad(head_pitch)/20 + torad( 8) + torad(var.jump * 10) + sin(-pi+torad(90)*swing_progress*2)",
+					"left_arm.rz": "                              torad(head_pitch)/20 + torad(-8) - torad(var.jump * 10)",
 					"right_arm.tx": "body.tx - 5 + (-sin(var.ls)/2 * limb_speed) * torad(head_yaw/4) * clamp(1 - limb_speed * 2, 0, 1) - 0.3",
-					"left_arm.tx": "body.tx + 5 + ( sin(var.ls)/2 * limb_speed) * torad(head_yaw/4) * clamp(1 - limb_speed * 2, 0, 1) + 0.3",
+					"left_arm.tx": " body.tx + 5 + ( sin(var.ls)/2 * limb_speed) * torad(head_yaw/4) * clamp(1 - limb_speed * 2, 0, 1) + 0.3",
 					"right_arm.ty": "body.ty + 1.4 + sin(var.r + var.b - torad(60))/7 + if(is_riding, 1, 0)",
-					"left_arm.ty": "body.ty + 1.4 + sin(var.r + var.b - torad(60))/7 + if(is_riding, 1, 0)",
-					"right_arm.tz": "-sin(var.r + var.b)/6 + torad(head_yaw) * clamp(1 - limb_speed * 2, 0, 1) + if(is_riding, -2, 0) + var.nov2 + sin(pi*swing_progress/2)",
-					"left_arm.tz": "-sin(var.r + var.b)/6 - torad(head_yaw) * clamp(1 - limb_speed * 2, 0, 1) + if(is_riding, -2, 0) + var.nov2 + sin(pi*swing_progress/2)"
+					"left_arm.ty": " body.ty + 1.4 + sin(var.r + var.b - torad(60))/7 + if(is_riding, 1, 0)",
+					"right_arm.tz": "-sin(var.r + var.b)/6 + torad(head_yaw) * clamp(1 - limb_speed * 2, 0, 1) + if(is_riding, -1, 0) + var.nov2 + sin(pi*swing_progress/2)",
+					"left_arm.tz": " -sin(var.r + var.b)/6 - torad(head_yaw) * clamp(1 - limb_speed * 2, 0, 1) + if(is_riding, -1, 0) + var.nov2 + sin(pi*swing_progress/2)"
 				},
 				{
 					"right_leg.rx": "if(is_riding, torad(-75), torad(10) * limb_speed + if(is_riding, torad(-80), clamp(torad(-5) + limb_speed, torad(- 5), 0) + (torad(2) + sin(torad( 2) + var.b)/100) + ( sin(var.ls))/if(limb_speed > 0.9, 0.8, 1.5) * (limb_speed * if(move_forward > 0, 1, -1))) + clamp(-torad(head_yaw)/30, -torad(5), torad(5)) + if(limb_speed > 0.9, 0, sin(var.jump / 3)) )",
@@ -84,10 +84,10 @@
 					"left_leg.rz": " if(is_riding, 0, clamp(torad(-3) + limb_speed, torad(-5), 0 ) * if(is_sneaking && is_on_ground, 0, 1) + torad(-3) ) + sin(var.ls)/16 * limb_speed/1.2",
 					"right_leg.tx": "-2 + clamp(-0.25 + limb_speed, -0.25, 0)",
 					"left_leg.tx": "  2 + clamp( 0.25 - limb_speed, 0, 0.25 )",
-					"right_leg.ty": "if(is_riding, 13, 0.1 + clamp(12 + cos(if(limb_speed > 0.9, 0, torad(-30)) + var.ls) * 2 * clamp(limb_speed * 2, 0, 2) + clamp(-1 + limb_speed * 1.5, 0, 1) , 0, 12.2) + if(is_riding, -1, 0) + clamp( (-sin(var.ls) + body.ty) * clamp(-cos(limb_speed*pi), 0, 1), -4, 0) - if(limb_speed > 0.9, 0, var.jump)  )",
-					"left_leg.ty": " if(is_riding, 13, 0.1 + clamp(12 - cos(if(limb_speed > 0.9, 0, torad(-30)) + var.ls) * 2 * clamp(limb_speed * 2, 0, 2) + clamp(-1 + limb_speed * 1.5, 0, 1) , 0, 12.2) + if(is_riding, -1, 0) + clamp( ( sin(var.ls) + body.ty) * clamp(-cos(limb_speed*pi), 0, 1), -4, 0) - if(limb_speed > 0.9, 0, var.jump)  )",
-					"right_leg.tz": "if(is_riding, -2.5, -1 + clamp(3 + cos(var.ls * 2)/2 * clamp(limb_speed * 3, 0, 1), -6, 1) * 1.2 + if(is_riding, -2, 0 + clamp( torad(head_yaw)/2, -pi/4, pi/4) - sin(torad( 20) + var.b)/8) + clamp(-1.5 + limb_speed * 6, -1.5, 0) + if(is_sneaking && is_on_ground, 2.5, 0) - if(limb_speed > 0.9, 0, if(!is_riding, var.jump, 0))  )",
-					"left_leg.tz": " if(is_riding, -2.5, -1 + clamp(3 - cos(var.ls * 2)/2 * clamp(limb_speed * 3, 0, 1), -6, 1) * 1.2 + if(is_riding, -2, 0 + clamp(-torad(head_yaw)/2, -pi/4, pi/4) - sin(torad(-20) + var.b)/8) + clamp(-0.5 + limb_speed * 2, -0.5, 0) + if(is_sneaking && is_on_ground, 2.5, 0) - if(limb_speed > 0.9, 0, if(!is_riding, var.jump, 0))  )"
+					"right_leg.ty": "if(is_riding, 13, 0.1 + clamp(12 + cos(if(limb_speed > 0.9, 0, torad(-30)) + var.ls) * 1 * clamp(limb_speed * 2, 0, 2) + clamp(-1 + limb_speed * 1.5, 0, 1) , 0, 12.2) + if(is_riding, -1, 0) + clamp( (-sin(var.ls) + body.ty) * clamp(-cos(limb_speed*pi), 0, 1), -4, 0) - if(limb_speed > 0.9, 0, var.jump)  )",
+					"left_leg.ty": " if(is_riding, 13, 0.1 + clamp(12 - cos(if(limb_speed > 0.9, 0, torad(-30)) + var.ls) * 1 * clamp(limb_speed * 2, 0, 2) + clamp(-1 + limb_speed * 1.5, 0, 1) , 0, 12.2) + if(is_riding, -1, 0) + clamp( ( sin(var.ls) + body.ty) * clamp(-cos(limb_speed*pi), 0, 1), -4, 0) - if(limb_speed > 0.9, 0, var.jump)  )",
+					"right_leg.tz": "if(is_riding, -2.5, -1 + clamp(3 + cos(var.ls * 2)/2 * clamp(limb_speed * 2, 0, 1), -6, 1) * 0.2 + if(is_riding, -2, 0 + clamp( torad(head_yaw)/2, -pi/4, pi/4) - sin(torad( 20) + var.b)/8) + if(is_sneaking && is_on_ground, 2.5, 0) - if(limb_speed > 0.9, 0, if(!is_riding, var.jump, 0))  )",
+					"left_leg.tz": " if(is_riding, -2.5, -1 + clamp(3 - cos(var.ls * 2)/2 * clamp(limb_speed * 2, 0, 1), -6, 1) * 0.2 + if(is_riding, -2, 0 + clamp(-torad(head_yaw)/2, -pi/4, pi/4) - sin(torad(-20) + var.b)/8) + if(is_sneaking && is_on_ground, 2.5, 0) - if(limb_speed > 0.9, 0, if(!is_riding, var.jump, 0))  )"
 				},
 				{
 					"cloak.rx": "body.rx - if(is_sneaking && is_on_ground, 0.5, 0)",
